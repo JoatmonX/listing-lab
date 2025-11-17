@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="real_estate_listings.ListingSummary" owl="1">
+        <div class="o_listing_summary card mb-3">
+            <div class="card-body">
+                <!-- Top row: price + basic stats -->
+                <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+                    <div>
+                        <div class="o_res_main_price display-6">
+                            <Field name="'price'"
+                                   record="props.record"
+                                   type="'monetary_no_cents'"
+                                   options="{'no_label': true}"/>
+                        </div>
+                        <div class="text-muted small">
+                            <t t-if="marketStatusLabel">
+                                <t t-esc="marketStatusLabel"/>
+                            </t>
+                            <t t-if="daysOnMarketDisplay">
+                                <t t-if="marketStatusLabel"> • </t>
+                                <t t-esc="daysOnMarketDisplay"/>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-4 text-nowrap">
+                        <div class="text-center">
+                            <div class="fw-semibold fs-5">
+                            <Field name="'bedrooms'"
+                                   record="props.record"/>
+                            </div>
+                            <div class="text-muted small text-uppercase">beds</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-semibold fs-5">
+                                <Field name="'baths_total'"
+                                       record="props.record"/>
+                            </div>
+                            <div class="text-muted small text-uppercase">baths</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-semibold fs-5">
+                                <Field name="'sqft'"
+                                       record="props.record"/>
+                            </div>
+                            <div class="text-muted small text-uppercase">sqft</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chips row (type / year built / lot) -->
+                <div class="row mt-3 g-2">
+                    <div class="col-auto">
+                        <span class="badge rounded-pill bg-light border text-dark">
+                            <t t-esc="propertyTypeLabel"/>
+                        </span>
+                    </div>
+                    <div class="col-auto" t-if="yearBuiltDisplay != '-'">
+                        <span class="badge rounded-pill bg-light border text-dark">
+                            Built in <t t-esc="yearBuiltDisplay"/>
+                        </span>
+                    </div>
+                    <div class="col-auto">
+                        <span class="badge rounded-pill bg-light border text-dark">
+                            <t t-esc="lotDisplay"/>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Value cards (Estimate / price per sqft / rent) -->
+                <div class="row mt-3 g-2">
+                    <div class="col-md-12 col-lg-6">
+                        <div class="o_res_metric_box border rounded-3 p-2 h-100 overflow-hidden text-truncate">
+                            <div class="small text-muted">Estimate</div>
+                            <Field name="'estimated_value'"
+                                   record="props.record"
+                                   type="'monetary_no_cents'"
+                                   options="{'no_label': true}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <div class="o_res_metric_box border rounded-3 p-2 h-100 overflow-hidden text-truncate">
+                            <div class="small text-muted">Price / Sqft</div>
+                            <Field name="'price_per_sqft'"
+                                   record="props.record"
+                                   type="'monetary_no_cents'"
+                                   options="{'no_label': true}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <div class="o_res_metric_box border rounded-3 p-2 h-100 overflow-hidden text-truncate">
+                            <div class="small text-muted">HOA Fee</div>
+                            <Field name="'hoa_fee'"
+                                   record="props.record"
+                                   type="'monetary_no_cents'"
+                                   options="{'no_label': true}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

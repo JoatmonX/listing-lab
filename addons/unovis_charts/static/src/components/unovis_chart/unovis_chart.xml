@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve" id="template">
+    <t t-name="unovis_charts.UnovisChart">
+        <div class="unovis-chart-wrapper" t-att-style="props.width || props.height ? `width:${props.width||'auto'};height:${props.height||'auto'};` : ''">
+            <div class="unovis-chart" t-ref="root"/>
+        </div>
+    </t>
+    <!-- Usage example (in a portal template):
+         <t t-component="unovis_charts.UnovisChart" t-props="{
+             initFnName: 'createUnovisChart',
+             data: someData,
+             options: someOptions,
+             width: '100%', height: '320px'
+         }"/>
+         Then define window.createUnovisChart = ({ el, Unovis, props }) => { ... } in a portal asset or page snippet.
+    -->
+</templates>

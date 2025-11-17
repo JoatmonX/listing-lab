@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="real_estate_listings.ListingBusListener" owl="1">
+        <div>
+            <t t-if="state.hasRemoteUpdate">
+                <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
+                    <div class="me-3">
+                        This listing was updated by another user. Please refresh to see the latest changes.
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary" t-on-click="onClickReloadFromServer">
+                        Refresh now
+                    </button>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

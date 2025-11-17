@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Property Types for Saved Searches -->
+        <record id="property_type_single_family" model="real_estate.saved_search.property_type">
+            <field name="name">Single Family</field>
+            <field name="code">single_family</field>
+        </record>
+        
+        <record id="property_type_multi_family" model="real_estate.saved_search.property_type">
+            <field name="name">Multi Family</field>
+            <field name="code">multi_family</field>
+        </record>
+        
+        <record id="property_type_condos" model="real_estate.saved_search.property_type">
+            <field name="name">Condos</field>
+            <field name="code">condos</field>
+        </record>
+        
+        <record id="property_type_condo_townhome_rowhome_coop" model="real_estate.saved_search.property_type">
+            <field name="name">Condo/Townhome/Rowhome/Co-op</field>
+            <field name="code">condo_townhome_rowhome_coop</field>
+        </record>
+        
+        <record id="property_type_condo_townhome" model="real_estate.saved_search.property_type">
+            <field name="name">Condo/Townhome</field>
+            <field name="code">condo_townhome</field>
+        </record>
+        
+        <record id="property_type_townhomes" model="real_estate.saved_search.property_type">
+            <field name="name">Townhomes</field>
+            <field name="code">townhomes</field>
+        </record>
+        
+        <record id="property_type_duplex_triplex" model="real_estate.saved_search.property_type">
+            <field name="name">Duplex/Triplex</field>
+            <field name="code">duplex_triplex</field>
+        </record>
+        
+        <record id="property_type_farm" model="real_estate.saved_search.property_type">
+            <field name="name">Farm</field>
+            <field name="code">farm</field>
+        </record>
+        
+        <record id="property_type_land" model="real_estate.saved_search.property_type">
+            <field name="name">Land</field>
+            <field name="code">land</field>
+        </record>
+        
+        <record id="property_type_mobile" model="real_estate.saved_search.property_type">
+            <field name="name">Mobile</field>
+            <field name="code">mobile</field>
+        </record>
+    </data>
+</odoo>

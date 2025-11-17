@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Popularity Tree View -->
+    <record id="view_real_estate_popularity_tree" model="ir.ui.view">
+        <field name="name">real_estate.popularity.tree</field>
+        <field name="model">real_estate.popularity</field>
+        <field name="arch" type="xml">
+            <list string="Popularity Metrics">
+                <field name="last_n_days"/>
+                <field name="views_total"/>
+                <field name="clicks_total"/>
+                <field name="saves_total"/>
+                <field name="shares_total"/>
+                <field name="leads_total"/>
+                <field name="dwell_time_mean"/>
+                <field name="dwell_time_median"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Popularity Form View -->
+    <record id="view_real_estate_popularity_form" model="ir.ui.view">
+        <field name="name">real_estate.popularity.form</field>
+        <field name="model">real_estate.popularity</field>
+        <field name="arch" type="xml">
+            <form string="Popularity Metrics">
+                <sheet>
+                    <group>
+                        <field name="property_id" invisible="context.get('hide_property_id', False)"/>
+                        <field name="last_n_days"/>
+                        <field name="views_total"/>
+                        <field name="clicks_total"/>
+                        <field name="saves_total"/>
+                        <field name="shares_total"/>
+                        <field name="leads_total"/>
+                        <field name="dwell_time_mean"/>
+                        <field name="dwell_time_median"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Popularity Graph View -->
+    <record id="view_real_estate_popularity_graph" model="ir.ui.view">
+        <field name="name">real_estate.popularity.graph</field>
+        <field name="model">real_estate.popularity</field>
+        <field name="arch" type="xml">
+            <graph string="Popularity Metrics" type="line">
+                <field name="last_n_days" type="row"/>
+                <field name="views_total" type="measure"/>
+                <field name="clicks_total" type="measure"/>
+                <field name="saves_total" type="measure"/>
+                <field name="shares_total" type="measure"/>
+                <field name="leads_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Popularity Action Window -->
+    <record id="action_real_estate_popularity" model="ir.actions.act_window">
+        <field name="name">Popularity Metrics</field>
+        <field name="res_model">real_estate.popularity</field>
+        <field name="view_mode">graph,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No popularity metrics found
+            </p>
+            <p>
+                Popularity metrics track how users interact with property listings.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,67 @@
+# Root-level data directory only
+/data/
+!*/data/
+
+# OCA addons
+addons_oca/
+
+# AI tools
+.junie
+
+# Environment
+.env
+
+# Virtualenv
+.venv/
+
+# IDE
+.idea/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Shared object files
+*.so
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# coverage
+.coverage
+htmlcov/
+
+# -----------------------------------
+# Docker
+# -----------------------------------
+
+# Ignore local docker-compose override files
+docker-compose.override.yml
+docker-compose.*.yml
+
+# Docker build cache directories
+.docker/
+docker-cache/
+
+# Avoid accidentally committing Dockerfile backups or temp files
+Dockerfile.*
+*Dockerfile.save
+*~dockerfile~
+
+# Ignore exported images
+*.tar
+
+# If using Docker volume-mounted logs/temp
+logs/
+tmp/

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Property Feature Form View -->
+    <record id="view_property_feature_form" model="ir.ui.view">
+        <field name="name">real_estate.feature.form</field>
+        <field name="model">real_estate.feature</field>
+        <field name="arch" type="xml">
+            <form string="Property Feature">
+                <sheet>
+                    <group>
+                        <field name="property_id"/>
+                        <field name="parent_category"/>
+                        <field name="category"/>
+                        <field name="text_items"/>
+                        <field name="display_text"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Property Feature List View -->
+    <record id="view_property_feature_list" model="ir.ui.view">
+        <field name="name">real_estate.feature.list</field>
+        <field name="model">real_estate.feature</field>
+        <field name="arch" type="xml">
+            <list string="Property Features">
+                <field name="property_id"/>
+                <field name="parent_category"/>
+                <field name="category"/>
+                <field name="display_text"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Property Feature Action Window -->
+    <record id="action_property_feature" model="ir.actions.act_window">
+        <field name="name">Property Features</field>
+        <field name="res_model">real_estate.feature</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first property feature
+            </p>
+            <p>
+                Features help categorize property details.
+            </p>
+        </field>
+    </record>
+
+</odoo>

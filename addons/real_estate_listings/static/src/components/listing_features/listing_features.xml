@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="real_estate_listings.ListingFeatures" owl="1">
+        <div class="re-listing-features o_form_field">
+            <div class="re-features-header">
+                <h3>Property Features</h3>
+                <button type="button" class="btn btn-secondary" t-on-click="onAddFeature">
+                    <i class="fa fa-plus"/> Add feature
+                </button>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="text-muted">Loading…</div>
+            </t>
+
+            <t t-foreach="parentCategories" t-as="parent" t-key="parent">
+                <div class="re-feature-section">
+                    <div class="re-section-title"><t t-out="parent"></t></div>
+
+                    <div class="re-feature-grid">
+                        <t t-foreach="categoriesOf(parent)" t-as="cat" t-key="cat">
+                            <div class="re-feature-card">
+                                <div class="re-card-title"><t t-out="cat"></t></div>
+                                <ul>
+                                    <t t-foreach="itemsOf(parent, cat)" t-as="item" t-key="item">
+                                        <li><t t-out="item"></t></li>
+                                    </t>
+                                </ul>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="!state.loading and !parentCategories.length">
+                <div class="text-muted">No features yet. Use “Add feature” to create one.</div>
+            </t>
+        </div>
+    </t>
+</templates>

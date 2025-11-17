@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Real Estate List View -->
+    <record id="view_real_estate_list" model="ir.ui.view">
+        <field name="name">real_estate.list</field>
+        <field name="model">real_estate.listing</field>
+        <field name="arch" type="xml">
+            <list string="Real Estate Listings">
+                <field name="address"/>
+                <field name="price"/>
+                <field name="price_per_sqft" string="$/sqft"/>
+                <field name="bedrooms" string="Bd"/>
+                <field name="baths_total" string="Bth"/>
+                <field name="sqft" string="Sqft"/>
+                <field name="lot_acres" string="Lot (Acres)"/>
+                <field name="year_built" string="YrBlt" widget="integer_no_comma"/>
+                <field name="listing_date" string="Date" widget="date"/>
+                <field name="days_on_market" string="Days"/>
+                <field name="status"
+                       widget="badge"
+                       decoration-primary="status == 'new'"
+                       decoration-success="status == 'interested'"
+                       decoration-danger="status == 'rejected'"
+                />
+
+                <field name="market_status"
+                       widget="badge"
+                       decoration-warning="market_status in ('pending', 'contingent')"
+                       decoration-success="market_status == 'active'"
+                />
+
+                <field name="user_notes" string="Notes"></field>
+                <field name="user_tag_ids"
+                       widget="many2many_tags"
+                       domain="[('tag_type','=','user')]"
+                       options="{'color_field': 'color'}"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Real Estate Form View -->
+    <record id="view_real_estate_form" model="ir.ui.view">
+        <field name="name">real_estate.form</field>
+        <field name="model">real_estate.listing</field>
+        <field name="arch" type="xml">
+            <form string="Real Estate Listing">
+                <field name="id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+
+                <header>
+                    <button name="action_open_url"
+                            string="View Listing"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="url == False"/>
+
+                    <button name="action_scrape_property"
+                            string="Update Property"
+                            type="object"
+                            class="oe_highlight"/>
+
+                    <field name="status"
+                           widget="statusbar"
+                           options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <!-- Bus listener: shows a refresh banner if the record was updated remotely -->
+                    <field name="id" widget="listing_bus_listener" nolabel="1"/>
+
+
+                    <!-- Stat Buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_features"
+                                type="object"
+                                icon="fa-list"
+                                class="oe_stat_button"
+                                invisible="not id">
+                            <field name="feature_count"
+                                   widget="statinfo"
+                                   string="Features"/>
+                        </button>
+
+                        <button name="action_view_photos"
+                                type="object"
+                                icon="fa-camera"
+                                class="oe_stat_button"
+                                invisible="not id">
+                            <field name="photo_count"
+                                   widget="statinfo"
+                                   string="Photos"/>
+                        </button>
+
+                        <button name="action_view_estimates"
+                                type="object"
+                                icon="fa-calculator"
+                                class="oe_stat_button"
+                                invisible="not id">
+                            <field name="estimate_count"
+                                   widget="statinfo"
+                                   string="Estimates"/>
+                        </button>
+
+                        <button name="action_view_tax_history"
+                                type="object"
+                                icon="fa-file-text-o"
+                                class="oe_stat_button"
+                                invisible="not id">
+                            <field name="tax_history_count"
+                                   widget="statinfo"
+                                   string="Tax History"/>
+                        </button>
+
+
+                        <button name="action_view_popularity"
+                                type="object"
+                                icon="fa-line-chart"
+                                class="oe_stat_button"
+                                invisible="not id">
+                            <field name="popularity_saves_28_days"
+                                   widget="statinfo"
+                                   string="Saves (28d)"/>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon"
+                            title="Active"
+                            bg_color="text-bg-success"
+                            invisible="market_status != 'active'"/>
+
+                    <widget name="web_ribbon"
+                            title="Pending"
+                            bg_color="text-bg-warning"
+                            invisible="market_status != 'pending'"/>
+
+                    <widget name="web_ribbon"
+                            title="Contingent"
+                            bg_color="text-bg-warning"
+                            invisible="market_status != 'contingent'"/>
+
+                    <widget name="web_ribbon"
+                            title="Off Market"
+                            bg_color="text-bg-secondary"
+                            invisible="market_status != 'off_market'"/>
+
+                    <widget name="web_ribbon"
+                            title="Sold"
+                            bg_color="text-bg-danger"
+                            invisible="market_status != 'sold'"/>
+
+
+                    <field name="id" invisible="True"/>
+
+                    <div class="row ">
+                        <div class="col-md-8 col-12">
+                            <div>
+                                <label for="address" string="Address"/>
+                                <h1>
+                                    <div class="d-flex">
+                                        <field name="is_favorite"
+                                               widget="boolean_favorite"
+                                               class="me-2"
+                                               nolabel="1"/>
+
+                                        <field class="text-break max-w-full"
+                                               name="address"
+                                               options="{'line_breaks': False}"
+                                               widget="text"
+                                               placeholder="123 Street Address, New York"/>
+                                    </div>
+                                </h1>
+                            </div>
+
+                            <group>
+
+                                <label for="user_tag_ids"
+                                       string="Tags"/>
+
+                                <field name="user_tag_ids"
+                                       widget="many2many_tags"
+                                       domain="[('tag_type','=','user')]"
+                                       nolabel="1"
+                                       colspan="2"
+                                       options="{'color_field': 'color'}"/>
+                            </group>
+
+
+                            <group string="Notebook">
+
+                                <label for="user_notes"
+                                       string="Notes &amp; Thoughts"/>
+
+                                <field class="text-break max-w-full"
+                                       name="user_notes"
+                                       nolabel="1"
+                                       colspan="2"
+                                       widget="html"/>
+
+
+                                <label for="user_pros"
+                                       string="Things to love"/>
+
+                                <field class="text-break max-w-full"
+                                       name="user_pros"
+                                       nolabel="1"
+                                       colspan="2"
+                                       widget="html"/>
+
+                                <label for="user_cons"
+                                       string="Concerns"/>
+
+                                <field class="text-break max-w-full"
+                                       name="user_cons"
+                                       nolabel="1"
+                                       colspan="2"
+                                       widget="html"/>
+                            </group>
+
+                            <!-- Listing dates -->
+                            <group string="Listing Dates">
+                                <group>
+                                    <field name="listing_date"/>
+                                    <field name="pending_date"/>
+                                    <field name="sold_date"/>
+                                </group>
+                                <group>
+                                    <field name="days_on_mls" readonly="1"/>
+                                </group>
+                            </group>
+
+
+                            <group>
+                                <group string="Home Information">
+                                    <field name="bedrooms"/>
+                                    <field name="baths_full"/>
+                                    <field name="baths_half"/>
+                                    <field name="baths_total"/>
+                                    <field name="sqft"/>
+                                    <field name="property_type" class="oe_inline"/>
+                                    <field name="year_built" widget="integer_no_comma"/>
+                                    <field name="stories"/>
+                                    <field name="basement"/>
+                                    <field name="garage"/>
+                                    <field name="parking"/>
+                                    <field name="fixtures"/>
+                                </group>
+
+                                <group string="Lot Information">
+                                    <field name="lot_acres"/>
+                                    <field name="lot_sqft"/>
+                                </group>
+                            </group>
+
+
+                            <group string="Financials">
+                                <group>
+                                    <field name="price" widget="monetary_no_cents"/>
+                                    <field name="price_per_sqft" widget="monetary"/>
+                                    <field name="hoa_fee" widget="monetary"/>
+                                </group>
+                                <group>
+
+                                </group>
+                            </group>
+
+                            <group string="Greed Factor">
+                                <group>
+                                    <field name="sold_date"/>
+                                    <field name="estimated_value" widget="monetary_no_cents"/>
+                                    <field name="last_sold_price" widget="monetary_no_cents"/>
+                                </group>
+                                <group>
+                                    <field name="years_since_sold"/>
+                                    <field name="price_vs_estimate" widget="monetary_no_cents"/>
+                                    <field name="price_vs_last_sold" widget="monetary_no_cents"/>
+                                </group>
+                            </group>
+
+                            <group string="Tax Information">
+                                <group>
+                                    <field name="assessed_value" widget="monetary_no_cents"/>
+                                    <field name="annual_tax" widget="monetary_no_cents"/>
+                                </group>
+                            </group>
+
+                            <group string="Fees">
+                                <group>
+                                    <field name="monthly_fees"/>
+                                    <field name="one_time_fees"/>
+                                    <field name="terms"/>
+                                </group>
+                            </group>
+
+                            <group string="Location &amp; Neighborhood">
+                                <group>
+                                    <field name="street"/>
+                                    <field name="unit"/>
+                                    <field name="city"/>
+                                    <field name="state"/>
+                                    <field name="zip_code"/>
+                                    <field name="county"/>
+
+
+                                    <separator string="Additional Address Details"/>
+                                    <field name="street_number"/>
+                                    <field name="street_direction"/>
+                                    <field name="street_name"/>
+                                    <field name="street_suffix"/>
+                                    <field name="address_full_line"/>
+                                    <field name="neighborhoods"/>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                    <field name="fips_code"/>
+                                </group>
+                            </group>
+
+                            <group string="Property Features">
+                                <!-- Custom grouped features widget (keeps ability to add features) -->
+                                <field name="feature_ids"
+                                       widget="listing_features"
+                                       context="{'default_property_id': id}"
+                                       nolabel="1"
+                                       colspan="2"/>
+                            </group>
+
+                            <group>
+                                <group string="Agent Details">
+                                    <field name="agent_name"/>
+                                    <field name="agent_phone" widget="phone"/>
+                                    <field name="agent_email" widget="email"/>
+                                    <field name="agent_state_license" invisible="1"/>
+                                    <field name="agent_uuid" invisible="1"/>
+                                </group>
+                                <group string="Office Details">
+                                    <field name="office_name"/>
+                                    <field name="broker_name"/>
+                                    <field name="office_email" widget="email"/>
+                                    <field name="office_uuid" invisible="1"/>
+                                    <field name="broker_uuid" invisible="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Public Records Record">
+                                <field name="tax_record_cl_id"/>
+                                <field name="tax_record_public_record_id"/>
+                                <field name="tax_record_tax_parcel_id"/>
+                                <field name="tax_record_last_update_date"/>
+                            </group>
+                            <group>
+                                <group><field name="parcel_number"/></group>
+                                <group><field name="tax_record_apn"/></group>
+                            </group>
+
+
+                            <!-- Web Data -->
+                            <group string="Web Data">
+                                <field name="url" widget="url"/>
+                                <field name="permalink" widget="url"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="mls"/>
+                                    <field name="mls_id"/>
+                                    <field name="mls_status"/>
+                                </group>
+                                <group>
+                                    <field name="property_id"/>
+                                    <field name="listing_id"/>
+                                </group>
+                            </group>
+
+                            <group string="Technical &amp; Other Data">
+                                <field name="primary_photo"/>
+                                <field name="photos"/>
+                                <field name="alt_photos"/>
+                                <field name="open_houses"/>
+                                <field name="units"/>
+                                <field name="current_estimates"/>
+                                <field name="estimates"/>
+                                <field name="pet_policy"/>
+                            </group>
+
+                        </div>
+
+
+                        <div class="col-md-4 col-12">
+                            <!-- Preview image -->
+                            <field
+                                    name="primary_image_id_preview_url"
+                                    widget="image_url"
+                                    class="w-full rounded-4"
+                                    nolabel="1"
+                                    colspan="2"
+                                    options="{'convert_to_webp': True, 'preview_image': 'image_128'}"
+                            />
+
+                            <!-- Listing summary box -->
+                            <field name="price"
+                                   widget="listing_summary"
+                                   nolabel="1"
+                                   class="w-100"/>
+
+                            <!-- Listing description -->
+                            <!-- Seller listing descriptions are mostly AI slop these days, moving them to the sidebar -->
+                            <group string="Listing Overview">
+                                <label for="listing_description"
+                                       string="Listing Description"/>
+
+                                <field name="listing_description"
+                                       nolabel="1"
+                                       colspan="2"/>
+
+                                <label for="listing_tag_ids"
+                                       string="Listing Tags"/>
+
+                                <field name="listing_tag_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"
+                                       colspan="2"
+                                       options="{'color_field': 'color'}"/>
+
+                                <label for="nearby_school_ids" string="Nearby Schools"/>
+                                <field name="nearby_school_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"
+                                       colspan="2"/>
+                            </group>
+
+                            <!-- Technical flags -->
+                            <group string="Property Flags">
+                                <field name="is_coming_soon"/>
+                                <field name="is_contingent"/>
+                                <field name="is_foreclosure"/>
+                                <field name="is_new_construction"/>
+                                <field name="is_new_listing"/>
+                                <field name="is_pending"/>
+                                <field name="is_price_reduced"/>
+                            </group>
+
+                        </div>
+                    </div>
+
+
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Real Estate Search View -->
+    <record id="real_estate_search" model="ir.ui.view">
+        <field name="name">real_estate.search</field>
+        <field name="model">real_estate.listing</field>
+        <field name="arch" type="xml">
+            <search string="Search Real Estate">
+                <field name="address"/>
+                <field name="property_id"/>
+                <field name="mls"/>
+                <field name="mls_id"/>
+                <field name="property_type"/>
+                <field name="bedrooms"/>
+                <field name="baths_full"/>
+                <field name="price"/>
+                <field name="agent_name"/>
+                <field name="listing_tag_ids"/>
+                <field name="user_tag_ids"/>
+                <filter string="Interested" name="interested" domain="[('status', '=', 'interested')]"/>
+                <filter string="Following" name="following" domain="[('status', '=', 'following')]"/>
+                <filter string="Sold" name="sold" domain="[('status', '=', 'sold')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Real Estate Tag Form View -->
+    <record id="view_real_estate_tag_form" model="ir.ui.view">
+        <field name="name">real_estate.tag.form</field>
+        <field name="model">real_estate.tag</field>
+        <field name="arch" type="xml">
+            <form string="Real Estate Tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="color" widget="color_picker"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Real Estate Tag List View -->
+    <record id="view_real_estate_tag_list" model="ir.ui.view">
+        <field name="name">real_estate.tag.list</field>
+        <field name="model">real_estate.tag</field>
+        <field name="arch" type="xml">
+            <list string="Real Estate Tags">
+                <field name="name"/>
+                <field name="color" widget="color"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Real Estate Action Window -->
+    <record id="action_real_estate" model="ir.actions.act_window">
+        <field name="name">Real Estate Listings</field>
+        <field name="res_model">real_estate.listing</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_interested': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first real estate listing
+            </p>
+            <p>
+                Track and manage your real estate property listings.
+            </p>
+        </field>
+    </record>
+
+    <!-- Real Estate Tag Action Window -->
+    <record id="action_real_estate_tag" model="ir.actions.act_window">
+        <field name="name">Property Tags</field>
+        <field name="res_model">real_estate.tag</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first property tag
+            </p>
+            <p>
+                Tags help you categorize your properties.
+            </p>
+        </field>
+    </record>
+
+</odoo>

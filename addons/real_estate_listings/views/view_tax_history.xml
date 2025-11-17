@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tax History List View -->
+    <record id="view_tax_history_list" model="ir.ui.view">
+        <field name="name">real_estate.tax_history.list</field>
+        <field name="model">real_estate.tax_history</field>
+        <field name="arch" type="xml">
+            <list string="Tax History">
+                <field name="year" widget="integer_no_comma"/>
+                <field name="tax" widget="monetary_no_cents_no_cents"/>
+                <field name="assessment_total" widget="monetary_no_cents_no_cents"/>
+                <field name="assessment_building" widget="monetary_no_cents_no_cents"/>
+                <field name="assessment_land" widget="monetary_no_cents_no_cents"/>
+                <field name="appraisal" widget="monetary_no_cents_no_cents"/>
+                <field name="market" widget="monetary_no_cents_no_cents"/>
+                <field name="value" widget="monetary_no_cents_no_cents"/>
+                <field name="assessed_year"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Tax History Form View -->
+    <record id="view_tax_history_form" model="ir.ui.view">
+        <field name="name">real_estate.tax_history.form</field>
+        <field name="model">real_estate.tax_history</field>
+        <field name="arch" type="xml">
+            <form string="Tax History">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="property_id"/>
+                            <field name="year" widget="integer_no_comma"/>
+                            <field name="assessed_year" widget="integer_no_comma"/>
+                        </group>
+                        <group>
+                            <field name="tax" widget="monetary_no_cents"/>
+                            <field name="assessment_total" widget="monetary_no_cents"/>
+                            <field name="assessment_building" widget="monetary_no_cents"/>
+                            <field name="assessment_land" widget="monetary_no_cents"/>
+                            <field name="appraisal" widget="monetary_no_cents"/>
+                            <field name="market" widget="monetary_no_cents"/>
+                            <field name="value" widget="monetary_no_cents"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tax History Action -->
+    <record id="action_tax_history" model="ir.actions.act_window">
+        <field name="name">Tax History</field>
+        <field name="res_model">real_estate.tax_history</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new tax history record
+            </p>
+        </field>
+    </record>
+</odoo>

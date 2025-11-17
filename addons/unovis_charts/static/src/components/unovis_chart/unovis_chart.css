@@ -1,0 +1,8 @@
+.unovis-chart-wrapper {
+  position: relative;
+  display: block;
+}
+.unovis-chart {
+  width: 100%;
+  height: 100%;
+}

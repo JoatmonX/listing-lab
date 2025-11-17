@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_real_estate_estimate_list" model="ir.ui.view">
+        <field name="name">real_estate.estimate.list</field>
+        <field name="model">real_estate.estimate</field>
+        <field name="arch" type="xml">
+            <list string="Property Estimates">
+                <field name="date"/>
+                <field name="estimate"/>
+                <field name="estimate_high"/>
+                <field name="estimate_low"/>
+                <field name="is_best_home_value"/>
+                <field name="source_name"/>
+                <field name="source_type"/>
+                <field name="property_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_real_estate_estimate_form" model="ir.ui.view">
+        <field name="name">real_estate.estimate.form</field>
+        <field name="model">real_estate.estimate</field>
+        <field name="arch" type="xml">
+            <form string="Property Estimate">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="property_id"/>
+                            <field name="date"/>
+                            <field name="is_best_home_value"/>
+                        </group>
+                        <group>
+                            <field name="source_name"/>
+                            <field name="source_type"/>
+                        </group>
+                    </group>
+                    <group string="Estimate Values">
+                        <field name="estimate"/>
+                        <field name="estimate_high"/>
+                        <field name="estimate_low"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_real_estate_estimate_search" model="ir.ui.view">
+        <field name="name">real_estate.estimate.search</field>
+        <field name="model">real_estate.estimate</field>
+        <field name="arch" type="xml">
+            <search string="Search Property Estimates">
+                <field name="property_id"/>
+                <field name="source_name"/>
+                <field name="source_type"/>
+                <filter string="Best Home Value" name="best_value" domain="[('is_best_home_value', '=', True)]"/>
+                <group>
+                    <filter string="Property" name="group_by_property" context="{'group_by': 'property_id'}"/>
+                    <filter string="Source" name="group_by_source" context="{'group_by': 'source_name'}"/>
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_real_estate_estimate" model="ir.actions.act_window">
+        <field name="name">Property Estimates</field>
+        <field name="res_model">real_estate.estimate</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new property estimate
+            </p>
+            <p>
+                Keep track of property value estimates from different sources.
+            </p>
+        </field>
+    </record>
+
+</odoo>

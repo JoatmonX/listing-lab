@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top menu items -->
+    <menuitem id="menu_real_estate_root"
+              name="Real Estate"
+              web_icon="real_estate_listings,static/description/icon.png"
+              groups="base.group_user"
+              sequence="0">
+
+        <!-- Property List View -->
+        <menuitem id="menu_real_estate_listings"
+                  name="Properties"
+                  action="action_real_estate"
+                  sequence="1"/>
+
+        <!-- Property Saved Search -->
+        <!-- Saved search is not coming through the scraper correctly so just disabling this menu option to reduce confusion -->
+        <!--        <menuitem id="menu_real_estate_saved_search"-->
+        <!--                  name="Property Saved Search"-->
+        <!--                  action="action_real_estate_saved_search"-->
+        <!--                  sequence="2"/>-->
+
+        <!-- Advanced -->
+        <menuitem id="menu_group_real_estate_advanced"
+                  name="Advanced"
+                  sequence="3">
+            <!-- Estimates -->
+            <menuitem id="menu_real_estate_estimates"
+                      name="Estimates"
+                      action="action_real_estate_estimate"
+                      sequence="1"/>
+
+            <!-- Features -->
+            <menuitem id="menu_real_estate_features"
+                      name="Features"
+                      action="action_property_feature"
+                      sequence="2"/>
+
+            <!-- Photos -->
+            <menuitem id="menu_real_estate_photos"
+                      name="Photos"
+                      action="action_real_estate_photos"
+                      sequence="3"/>
+
+            <!-- Popularity -->
+            <menuitem id="menu_real_estate_popularity"
+                      name="Popularity"
+                      action="action_real_estate_popularity"
+                      sequence="4"/>
+
+            <!-- Tax Histories -->
+            <menuitem id="menu_real_estate_tax_histories"
+                      name="Tax Histories"
+                      action="action_tax_history"
+                      sequence="5"/>
+
+            <!-- Property Tags -->
+            <menuitem id="menu_real_estate_tags"
+                      name="Property Tags"
+                      action="action_real_estate_tag"
+                      sequence="6"/>
+
+            <!-- Photo Tags -->
+            <menuitem id="menu_real_estate_photo_tags"
+                      name="Photo Tags"
+                      action="action_real_estate_photo_tags"
+                      sequence="7"/>
+
+            <!-- Search Property Types -->
+            <menuitem id="menu_real_estate_saved_search_property_type"
+                      name="Search Property Types"
+                      action="action_real_estate_saved_search_property_type"
+                      sequence="2"/>
+        </menuitem>
+    </menuitem>
+</odoo>
