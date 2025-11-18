@@ -42,10 +42,6 @@
                        string="YrBlt"
                        widget="integer_no_comma"/>
 
-                <field name="listing_date"
-                       string="LstDate"
-                       widget="date"/>
-
                 <field name="days_on_market"
                        string="LstAge"/>
 
