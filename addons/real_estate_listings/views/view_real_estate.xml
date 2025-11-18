@@ -117,7 +117,12 @@
                                 <!-- Price and quick stats -->
                                 <div class="d-flex align-items-center justify-content-between gap-2">
                                     <div class="fw-bold">
-                                        <field name="price" widget="monetary_no_cents" nolabel="1"/>
+                                        <h2>
+                                            <field name="price"
+                                                   widget="monetary_no_cents"
+                                                   class="text-success"
+                                                   nolabel="1"/>
+                                        </h2>
                                     </div>
                                     <div class="text-muted small text-nowrap">
                                         <t t-if="record.bedrooms.value != null">
@@ -142,7 +147,9 @@
 
                                 <!-- User tags -->
                                 <div class="mt-1">
-                                    <field name="user_tag_ids" widget="many2many_tags" nolabel="1"
+                                    <field name="user_tag_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"
                                            options="{'color_field': 'color'}"/>
                                 </div>
                             </div>
