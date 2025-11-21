@@ -1,7 +1,9 @@
+version: "3.8"
+
 services:
+
   listing_lab:
-    build:
-      dockerfile: Dockerfile
+    image: ghcr.io/adomi-io/listing-lab-odoo:latest
     ports:
       - "8069:8069"
       - "8072:8072"
@@ -33,6 +35,7 @@ services:
       - ./addons:/volumes/addons
       - odoo_data:/volumes/data
       - ./config/odoo.conf:/volumes/config/odoo.conf
+      - ./hooks/hook_setup.sh:/hook_setup
 
   listing_lab_postgres:
     image: postgres:16
@@ -78,18 +81,4 @@ services:
       RABBITMQ_QUEUE: ${RABBITMQ_QUEUE:-property_scrape_queue}
       RABBITMQ_EXCHANGE: ${RABBITMQ_EXCHANGE:-property_exchange}
       RABBITMQ_ROUTING_KEY: ${RABBITMQ_ROUTING_KEY:-property.scrape}
-      ODOO_URL: http://listing_lab:8069
-    volumes:
-      - ./scripts/real_estate_scraper:/app
-    env_file:
-      - .env
-    depends_on:
-      listing_lab:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-
-volumes:
-  odoo_data:
-  postgres_data:
-  rabbitmq_data:
+      ODOO_URL: http://listin_
