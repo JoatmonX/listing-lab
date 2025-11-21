@@ -33,7 +33,6 @@ services:
       - ./addons:/volumes/addons
       - odoo_data:/volumes/data
       - ./config/odoo.conf:/volumes/config/odoo.conf
-      - ./hooks/hook_setup.sh:/hook_setup
 
   listing_lab_postgres:
     image: postgres:16
